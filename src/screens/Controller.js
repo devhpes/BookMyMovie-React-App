@@ -8,7 +8,7 @@ import Home from "./home/Home";
 const Controller = () => {
   return (
     <div>
-      <Header />
+      <Header/>
       <Router>
         <div>
           <Route exact path="/">

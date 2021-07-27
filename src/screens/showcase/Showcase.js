@@ -57,7 +57,6 @@ const Showcase = (props) => {
   } else {
     return (
       <div>
-        <div className="upcoming-movies">Upcoming movies</div>
         <div className={classes.root}>
           <GridList className={classes.gridList} cols={6} cellHeight={250}>
             {items.map((movies) => (

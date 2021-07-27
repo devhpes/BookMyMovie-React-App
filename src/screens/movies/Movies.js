@@ -123,23 +123,23 @@ const Movies = (props) => {
   }, []);
 
   const movieNamehandler = (event) => {
-    setmovies({ movies: event.target.value });
+    setmovies(event.target.value);
   };
 
   const genreSelectHandler = (event) => {
-    setGenres({ genres: event.target.value });
+    setGenres(event.target.value);
   };
 
   const artistSelectHandler = (event) => {
-    setArtists({ artists: [artists, event.target.value] });
+    setArtists(event.target.value);
   };
 
   const releaseDateHandler = (event) => {
-    setReleaseStartDate({ releaseStartDate: event.target.value });
+    setReleaseStartDate(event.target.value);
   };
 
   const releaseEndDateHandler = (event) => {
-    setReleaseEndDate({ releaseEndDate: event.target.value });
+    setReleaseEndDate(event.target.value);
   };
 
   if (error) {

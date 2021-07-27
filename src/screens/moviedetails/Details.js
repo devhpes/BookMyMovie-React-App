@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Details.css";
-//import Header from "../header/Header";
+import Header from "../../common/header/Header";
 import {
   withStyles,
   Typography,
@@ -102,6 +102,7 @@ const Details = (props) => {
   } else {
     return (
       <div>
+        <Header/>
         <div className="details">
           <div className="back">
             <Typography>
