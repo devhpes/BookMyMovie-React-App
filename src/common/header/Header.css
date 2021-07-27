@@ -1,66 +1,73 @@
 ::-webkit-scrollbar-thumb {
-    background: grey;
-    border-radius: 8px;
+  background: grey;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+.container {
+  display: flex;
+  top:50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.logo {
+  animation: logo-spin infinite 8s linear;
+  height: 35px;
+  background: #ff7f7f;
+}
+
+.topnav {
+  background-color: #222;
+  height: 36px;
+  padding: 8px 32px 16px 8px;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav-right {
+  float: right;
+  padding-right: 20px;
+}
+
+.bookshow {
+  float: right;
+  margin-right: 8px;
+}
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}
+
+.red {
+  color: red;
+  margin-left: 7px;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: scaleX(-1);
   }
-  
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 3px;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 3px;
-  }
-  
-  
-  body {
-    margin: 0;
-  }
-  
-  .logo {
-    animation: logo-spin infinite 8s linear;
-    height: 35px;
-    background: #ff7f7f;
-  }
-  
-  .topnav {
-    background-color: #222;
-    height: 36px;
-    padding: 8px 32px 16px 8px;
-  }
-  
-  .topnav a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-  .topnav-right {
-    float: right;
-    padding-right: 20px;
-  }
-  
-  .bookshow {
-    float: right;
-    margin-right: 8px;
-  }
-  
-  .displayNone {
-    display: none;
-  }
-  
-  .displayBlock {
-    display: block;
-  }
-  
-  .red {
-    color: red;
-    margin-left: 7px;
-  }
-  
-  @keyframes logo-spin {
-    from { transform: scaleX(-1); }
-  }
+}
