@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../header/Header";
+import Header from "../../common/header/Header";
 import Movies from "../movies/Movies";
 import Showcase from "../showcase/Showcase";
 import Details from "../moviedetails/Details";
