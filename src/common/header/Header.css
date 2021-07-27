@@ -12,23 +12,13 @@
   width: 3px;
 }
 
-.container {
-  display: flex;
-  top:50%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-}
-
 .logo {
   animation: logo-spin infinite 8s linear;
   height: 35px;
   background: #ff7f7f;
 }
 
-.topnav {
+.header {
   background-color: #222;
   height: 36px;
   padding: 8px 32px 16px 8px;

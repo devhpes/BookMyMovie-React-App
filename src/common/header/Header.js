@@ -3,6 +3,7 @@ import "../header/Header.css";
 import Button from "@material-ui/core/Button";
 import logo from "../../assets/logo.svg";
 import Modal from "react-modal";
+import PropTypes from "prop-types";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,7 +13,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
+import Typography from "@material-ui/core/Typography";
 
 const customStyles = {
   content: {
@@ -26,13 +27,18 @@ const customStyles = {
   },
 };
 
+const TabContainer = function (props) {
+  return (
+    <Typography component="div" style={{ padding: 0, textAlign: "center" }}>
+      {props.children}
+    </Typography>
+  );
+};
+
 const styles = (theme) => ({
   Input: {
     margin: theme.spacing.unit,
     padding: theme.spacing.unit,
-  },
-  Button: {
-    marginTop: "50px",
   },
   inputLable: {
     marginLeft: "8px",
@@ -79,8 +85,9 @@ const Header = (props) => {
     sessionStorage.getItem("access-token") == null ? false : true
   );
 
-  const handleTabChange = (newValue) => {
-    setValue({ newValue });
+  const handleTabChange = (event, newValue) => {
+    console.log(newValue);
+    setValue(newValue);
   };
 
   const usernameChangeHandler = (e) => {
@@ -176,7 +183,7 @@ const Header = (props) => {
 
   return (
     <div>
-      <div className="topnav">
+      <header className="header">
         <img src={logo} className="logo" alt="Movies App Logo" />
         <div className="topnav-right">
           <Button variant="contained" color="default" onClick={openModal}>
@@ -185,13 +192,14 @@ const Header = (props) => {
         </div>
 
         <div className="topnav-right">
-          <Button variant="contained" color="default" onClick={logoutHandler}>
+          <Button variant="contained" color="default">
             Logout
           </Button>
         </div>
-      </div>
+      </header>
 
       <Modal
+        ariaHideApp={false}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Login"
@@ -206,7 +214,7 @@ const Header = (props) => {
               <Tab label="Register" />
             </Tabs>
             {value === 0 && (
-              <div>
+              <TabContainer>
                 <FormControl required>
                   <InputLabel htmlFor="username" className={classes.inputLable}>
                     Username
@@ -262,11 +270,11 @@ const Header = (props) => {
                 >
                   LOGIN
                 </Button>
-              </div>
+              </TabContainer>
             )}
 
             {value === 1 && (
-              <div>
+              <TabContainer>
                 <FormControl required>
                   <InputLabel
                     htmlFor="firstname"
@@ -376,13 +384,17 @@ const Header = (props) => {
                 >
                   REGISTER
                 </Button>
-              </div>
+              </TabContainer>
             )}
           </CardContent>
         </Paper>
       </Modal>
     </div>
   );
+};
+
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(Header);
