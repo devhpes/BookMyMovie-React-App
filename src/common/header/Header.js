@@ -36,14 +36,6 @@ const TabContainer = function (props) {
 };
 
 const styles = (theme) => ({
-  Input: {
-    margin: theme.spacing.unit,
-    padding: theme.spacing.unit,
-  },
-  inputLable: {
-    marginLeft: "8px",
-    marginTop: "15px",
-  },
   Paper: {
     borderRadius: 5,
     padding: 5,
@@ -216,6 +208,7 @@ const Header = (props) => {
             </Tabs>
             {value === 0 && (
               <TabContainer>
+              
                 <FormControl required>
                   <InputLabel htmlFor="username" className={classes.inputLable}>
                     Username
@@ -232,6 +225,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
 
+                <br />
                 <br />
 
                 <FormControl required>
@@ -253,6 +247,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
+                <br />
 
                 {loggedIn === true && (
                   <FormControl>
@@ -261,6 +256,7 @@ const Header = (props) => {
                 )}
 
                 <br />
+            
 
                 <Button
                   variant="contained"
@@ -274,6 +270,7 @@ const Header = (props) => {
 
             {value === 1 && (
               <TabContainer>
+  
                 <FormControl required>
                   <InputLabel
                     htmlFor="firstname"
@@ -294,6 +291,7 @@ const Header = (props) => {
                 </FormControl>
 
                 <br />
+                <br />
 
                 <FormControl required>
                   <InputLabel htmlFor="lastname" className={classes.inputLable}>
@@ -311,6 +309,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
+                <br />
 
                 <FormControl required>
                   <InputLabel htmlFor="email" className={classes.inputLable}>
@@ -327,6 +326,7 @@ const Header = (props) => {
                     <span className="red">required</span>
                   </FormHelperText>
                 </FormControl>
+                <br />
                 <br />
 
                 <FormControl required>
@@ -348,6 +348,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
+                <br />
 
                 <FormControl required>
                   <InputLabel htmlFor="contact" className={classes.inputLable}>
@@ -365,6 +366,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
+                <br />
 
                 {registrationSucces === true && (
                   <FormControl>
@@ -374,6 +376,7 @@ const Header = (props) => {
                   </FormControl>
                 )}
                 <br />
+               
 
                 <Button
                   variant="contained"
