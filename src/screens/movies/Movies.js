@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "../movies/Movies.css";
 import { withStyles } from "@material-ui/core/styles";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import Checkbox from "@material-ui/core/Checkbox";
-import { InputLabel } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import { Typography } from "@material-ui/core";
-import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
-import ListItemText from "@material-ui/core/ListItemText";
+import {
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  Grid,
+  FormControl,
+  Checkbox,
+  InputLabel,
+  Card,
+  CardContent,
+  Button,
+  Typography,
+  Input,
+  MenuItem,
+  TextField,
+  ListItemText
+
+} from "@material-ui/core";
 import { Select } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 const styles = (theme) => ({
   flexContainer: {
@@ -52,7 +56,7 @@ const Movies = (props) => {
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [movies, setmovies] = useState("");
+  const [movies, setmovies] = useState([]);
   const [moviesList, setmoviesList] = useState([]);
   const [genres, setGenres] = useState([]);
   const [artists, setArtists] = useState([]);
@@ -143,6 +147,12 @@ const Movies = (props) => {
     setReleaseEndDate(event.target.value);
   };
 
+  const history = useHistory();
+  const openDetailsPage = (movies) => {
+    console.log(movies);
+    history.push("/details", { details: movies });
+  };
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
@@ -151,9 +161,14 @@ const Movies = (props) => {
     return (
       <div className={classes.flexContainer}>
         <Grid item xs={9}>
-          <GridList cols={4}  cellHeight={350}>
+          <GridList cols={4} cellHeight={350}>
             {moviesList.map((movies) => (
-              <GridListTile key={movies.id} className={classes.GridListTile}>
+              <GridListTile
+                key={movies.id}
+                className={classes.GridListTile}
+                cols={1}
+                onClick={() => openDetailsPage(movies)}
+              >
                 <img
                   src={movies.poster_url}
                   alt={movies.title}

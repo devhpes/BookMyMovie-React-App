@@ -102,7 +102,6 @@ const Details = (props) => {
   } else {
     return (
       <div>
-        <Header/>
         <div className="details">
           <div className="back">
             <Typography>
