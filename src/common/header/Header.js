@@ -208,7 +208,6 @@ const Header = (props) => {
             </Tabs>
             {value === 0 && (
               <TabContainer>
-              
                 <FormControl required>
                   <InputLabel htmlFor="username" className={classes.inputLable}>
                     Username
@@ -256,7 +255,6 @@ const Header = (props) => {
                 )}
 
                 <br />
-            
 
                 <Button
                   variant="contained"
@@ -270,7 +268,6 @@ const Header = (props) => {
 
             {value === 1 && (
               <TabContainer>
-  
                 <FormControl required>
                   <InputLabel
                     htmlFor="firstname"
@@ -376,7 +373,6 @@ const Header = (props) => {
                   </FormControl>
                 )}
                 <br />
-               
 
                 <Button
                   variant="contained"
