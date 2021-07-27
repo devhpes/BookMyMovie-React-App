@@ -24,10 +24,11 @@ const styles = (theme) => ({
     flexWrap: "wrap",
     overflow: "hidden",
   },
-  gridList: {
+
+  GridListTile: {
     width: "76%",
-    height: 450,
     margin: "16px",
+    height: 450,
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
@@ -150,9 +151,9 @@ const Movies = (props) => {
     return (
       <div className={classes.flexContainer}>
         <Grid item xs={9}>
-          <GridList cols={3} className={classes.gridList} cellHeight={350}>
+          <GridList cols={4}  cellHeight={350}>
             {moviesList.map((movies) => (
-              <GridListTile key={movies.id}>
+              <GridListTile key={movies.id} className={classes.GridListTile}>
                 <img
                   src={movies.poster_url}
                   alt={movies.title}

@@ -86,7 +86,6 @@ const Header = (props) => {
   );
 
   const handleTabChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
 
@@ -114,6 +113,7 @@ const Header = (props) => {
       .then(
         (response) => {
           setLoggedIn(response);
+          console.log(response);
         },
         (error) => {
           setError(error);
@@ -140,6 +140,7 @@ const Header = (props) => {
       .then(
         (response) => {
           setRegistrationSucces(response);
+          console.log(response);
         },
         (error) => {
           setError(error);
@@ -232,7 +233,6 @@ const Header = (props) => {
                 </FormControl>
 
                 <br />
-                <br />
 
                 <FormControl required>
                   <InputLabel
@@ -253,14 +253,13 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
+
                 {loggedIn === true && (
                   <FormControl>
                     <span className="success-text">Login Successful!</span>
                   </FormControl>
                 )}
 
-                <br />
                 <br />
 
                 <Button
@@ -295,7 +294,6 @@ const Header = (props) => {
                 </FormControl>
 
                 <br />
-                <br />
 
                 <FormControl required>
                   <InputLabel htmlFor="lastname" className={classes.inputLable}>
@@ -313,7 +311,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
+
                 <FormControl required>
                   <InputLabel htmlFor="email" className={classes.inputLable}>
                     Email
@@ -330,7 +328,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
+
                 <FormControl required>
                   <InputLabel
                     htmlFor="registerPassword"
@@ -350,7 +348,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
+
                 <FormControl required>
                   <InputLabel htmlFor="contact" className={classes.inputLable}>
                     Contact No.
@@ -367,7 +365,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
+
                 {registrationSucces === true && (
                   <FormControl>
                     <span className="success">
@@ -376,7 +374,7 @@ const Header = (props) => {
                   </FormControl>
                 )}
                 <br />
-                <br />
+
                 <Button
                   variant="contained"
                   color="primary"
