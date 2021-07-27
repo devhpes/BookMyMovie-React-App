@@ -38,6 +38,11 @@ const styles = (theme) => ({
     marginLeft: "8px",
     marginTop: "15px",
   },
+  Paper: {
+    borderRadius: 5,
+    padding: 5,
+    border: "0.1px solid grey",
+  },
 });
 
 Modal.setAppElement(document.getElementById("root"));
@@ -49,17 +54,13 @@ const Header = (props) => {
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  function openModal() {
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -192,14 +193,13 @@ const Header = (props) => {
 
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         contentLabel="Login"
         aria-labelledby="Modal"
         aria-describedby="Modal for Login and Registration"
         style={customStyles}
       >
-        <Paper>
+        <Paper className={classes.Paper}>
           <CardContent>
             <Tabs value={value} onChange={handleTabChange} centered>
               <Tab label="Login" />
