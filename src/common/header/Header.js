@@ -74,9 +74,7 @@ const Header = (props) => {
 
   const [registrationSucces, setRegistrationSucces] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(
-    sessionStorage.getItem("access-token") == null ? false : true
-  );
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -94,17 +92,19 @@ const Header = (props) => {
     if (e) e.preventDefault();
     const encodeUsernameAndPassword = window.btoa(`${username}:${password}`);
 
-    fetch("http://localhost:8085/api/v1/auth/login", {
+    const rawResponse = fetch("http://localhost:8085/api/v1/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
         Accept: "application/json;Charset=UTF-8",
         Authorization: `Basic ${encodeUsernameAndPassword}`,
       },
-    }).then(
+    })
+    .then(
       (response) => {
-        console.log(response);
-        setLoggedIn(response);
+        setLoggedIn(response.ok);
+        //sessionStorage.setItem("CurrentUser", JSON.stringify(rawResponse.response));
+        sessionStorage.setItem("access-token", response.headers.get("access-token"));
       },
       (error) => {
         setError(error);
@@ -152,7 +152,6 @@ const Header = (props) => {
     fetch("http://localhost:8085/api/v1/signup", requestOptions).then(
       (response) => {
         setRegistrationSucces(response.ok);
-        console.log(response);
       },
       (error) => {
         setError(error);
@@ -166,29 +165,34 @@ const Header = (props) => {
   }, []);
 
   const logoutHandler = (e) => {
-    sessionStorage.removeItem("uuid");
     sessionStorage.removeItem("access-token");
-
     setLoggedIn({
       loggedIn: false,
     });
+  };
+
+  const getCurrentUser = () => {
+    sessionStorage.getItem("access-token");
+    console.log(sessionStorage.getItem("access-token"));
   };
 
   return (
     <div>
       <header className="header">
         <img src={logo} className="logo" alt="Movies App Logo" />
-        <div className="topnav-right">
-          <Button variant="contained" color="default" onClick={openModal}>
-            Login
-          </Button>
-        </div>
-
-        <div className="topnav-right">
-          <Button variant="contained" color="default">
-            Logout
-          </Button>
-        </div>
+        {loggedIn ? 
+          <div className="topnav-right">
+            <Button variant="contained" color="default" onClick={openModal}>
+              Login
+            </Button>
+          </div>
+         : 
+          <div className="topnav-right">
+            <Button variant="contained" color="default" onclick={logoutHandler}>
+              Logout
+            </Button>
+          </div>
+      } 
       </header>
 
       <Modal
@@ -209,175 +213,185 @@ const Header = (props) => {
             {value === 0 && (
               <TabContainer>
                 <br />
-                {/* <form onSubmit={loginHandler}> */}
-                <FormControl required>
-                  <InputLabel htmlFor="username" className={classes.inputLable}>
-                    Username
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="username"
-                    type="text"
-                    username={username}
-                    onChange={usernameChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-
-                <br />
-                <br />
-
-                <FormControl required>
-                  <InputLabel
-                    htmlFor="loginPassword"
-                    className={classes.inputLable}
-                  >
-                    Password
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="loginPassword"
-                    type="password"
-                    password={password}
-                    onChange={passwordChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-                <br />
-                <br />
-
-                {loggedIn === true && (
-                  <FormControl>
-                    <span className="success-text">Login Successful!</span>
+                <form onSubmit={loginHandler} noValidate>
+                  <FormControl required>
+                    <InputLabel
+                      htmlFor="username"
+                      className={classes.inputLable}
+                    >
+                      Username
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="username"
+                      type="text"
+                      username={username}
+                      onChange={usernameChangeHandler}
+                    />
                   </FormControl>
-                )}
 
-                <br />
+                  <br />
+                  <br />
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={loginHandler}
-                >
-                  LOGIN
-                </Button>
-                {/* </form> */}
+                  <FormControl required>
+                    <InputLabel
+                      htmlFor="loginPassword"
+                      className={classes.inputLable}
+                    >
+                      Password
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="loginPassword"
+                      type="password"
+                      password={password}
+                      onChange={passwordChangeHandler}
+                    />
+                  </FormControl>
+                  <br />
+                  <br />
+
+                  {loggedIn === true && (
+                    <FormControl>
+                      <span className="registrationSuccess">
+                        Login Successful!
+                      </span>
+                    </FormControl>
+                  )}
+
+                  <br />
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={loginHandler}
+                  >
+                    LOGIN
+                  </Button>
+                </form>
               </TabContainer>
             )}
 
             {value === 1 && (
               <TabContainer>
                 <br />
-                <FormControl required>
-                  <InputLabel
-                    htmlFor="firstname"
-                    className={classes.inputLable}
-                  >
-                    First Name
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="firstname"
-                    type="text"
-                    firstname={firstname}
-                    onChange={firstNameChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-                <br />
-          
-                <FormControl required>
-                  <InputLabel htmlFor="lastname" className={classes.inputLable}>
-                    Last Name
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="lastname"
-                    type="text"
-                    lastname={lastname}
-                    onChange={lastNameChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-                <br />
-               
-                <FormControl required>
-                  <InputLabel htmlFor="email" className={classes.inputLable}>
-                    Email
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="email"
-                    type="email"
-                    email={email}
-                    onChange={emailChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-                <br />
-              
-                <FormControl required>
-                  <InputLabel
-                    htmlFor="registerPassword"
-                    className={classes.inputLable}
-                  >
-                    Password
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="registerPassword"
-                    type="password"
-                    regpassword={regpassword}
-                    onChange={regPasswordChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-                <br />
-              
-
-                <FormControl required>
-                  <InputLabel htmlFor="contact" className={classes.inputLable}>
-                    Contact No.
-                  </InputLabel>
-                  <Input
-                    className={classes.Input}
-                    id="contact"
-                    type="text"
-                    contact={contact}
-                    onChange={contactChangeHandler}
-                  />
-                  <FormHelperText>
-                    <span className="red">required</span>
-                  </FormHelperText>
-                </FormControl>
-                <br />
-
-                {registrationSucces === true && (
-                  <FormControl>
-                    <span className="registrationSuccess">Registration Successful. Please Login!</span>
+                <form onSubmit={registerHandler} noValidate>
+                  <FormControl required>
+                    <InputLabel
+                      htmlFor="firstname"
+                      className={classes.inputLable}
+                    >
+                      First Name
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="firstname"
+                      type="text"
+                      firstname={firstname}
+                      onChange={firstNameChangeHandler}
+                    />
+                    <FormHelperText>
+                      <span className="red">required</span>
+                    </FormHelperText>
                   </FormControl>
-                )}
-                <br />
+                  <br />
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={registerHandler}
-                >
-                  REGISTER
-                </Button>
+                  <FormControl required>
+                    <InputLabel
+                      htmlFor="lastname"
+                      className={classes.inputLable}
+                    >
+                      Last Name
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="lastname"
+                      type="text"
+                      lastname={lastname}
+                      onChange={lastNameChangeHandler}
+                    />
+                    <FormHelperText>
+                      <span className="red">required</span>
+                    </FormHelperText>
+                  </FormControl>
+                  <br />
+
+                  <FormControl required>
+                    <InputLabel htmlFor="email" className={classes.inputLable}>
+                      Email
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="email"
+                      type="email"
+                      email={email}
+                      onChange={emailChangeHandler}
+                    />
+                    <FormHelperText>
+                      <span className="red">required</span>
+                    </FormHelperText>
+                  </FormControl>
+                  <br />
+
+                  <FormControl required>
+                    <InputLabel
+                      htmlFor="registerPassword"
+                      className={classes.inputLable}
+                    >
+                      Password
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="registerPassword"
+                      type="password"
+                      regpassword={regpassword}
+                      onChange={regPasswordChangeHandler}
+                    />
+                    <FormHelperText>
+                      <span className="red">required</span>
+                    </FormHelperText>
+                  </FormControl>
+                  <br />
+
+                  <FormControl required>
+                    <InputLabel
+                      htmlFor="contact"
+                      className={classes.inputLable}
+                    >
+                      Contact No.
+                    </InputLabel>
+                    <Input
+                      className={classes.Input}
+                      id="contact"
+                      type="text"
+                      contact={contact}
+                      onChange={contactChangeHandler}
+                    />
+                    <FormHelperText>
+                      <span className="red">required</span>
+                    </FormHelperText>
+                  </FormControl>
+                  <br />
+
+                  {registrationSucces === true && (
+                    <FormControl>
+                      <span className="registrationSuccess">
+                        Registration Successful. Please Login!
+                      </span>
+                    </FormControl>
+                  )}
+                  <br />
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={registerHandler}
+                  >
+                    REGISTER
+                  </Button>
+                </form>
               </TabContainer>
             )}
           </CardContent>

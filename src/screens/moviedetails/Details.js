@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Details.css";
-import Header from "../../common/header/Header";
 import {
   withStyles,
   Typography,
@@ -8,7 +7,6 @@ import {
   GridListTile,
   GridListTileBar,
   GridList,
-  ImageList,
 } from "@material-ui/core/";
 import { Link, BrowserRouter } from "react-router-dom";
 import YouTube from "react-youtube";
@@ -70,7 +68,7 @@ const Details = (props) => {
   const URL = "http://localhost:8085/api/v1/";
 
   const Movies = () => {
-    fetch(`${URL}movies/009ae262-a234-11e8-b475-720006ceb890`, {
+    fetch(`${URL}movies/`, {
       mode: "no-cors",
       "Cache-Control": "no-cache",
     })
