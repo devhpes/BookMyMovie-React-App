@@ -90,8 +90,8 @@ const Header = (props) => {
   };
 
   const loginHandler = () => {
+
     const encodeUsernameAndPassword = window.btoa(`${username}:${password}`);
-    console.log(encodeUsernameAndPassword);
 
     fetch("http://localhost:8085/api/v1/auth/login", {
       method: "POST",
@@ -105,7 +105,6 @@ const Header = (props) => {
       .then(
         (response) => {
           setLoggedIn(response);
-          console.log(response);
         },
         (error) => {
           setError(error);
@@ -208,6 +207,7 @@ const Header = (props) => {
             </Tabs>
             {value === 0 && (
               <TabContainer>
+                <br />
                 <FormControl required>
                   <InputLabel htmlFor="username" className={classes.inputLable}>
                     Username
@@ -268,6 +268,7 @@ const Header = (props) => {
 
             {value === 1 && (
               <TabContainer>
+                <br />
                 <FormControl required>
                   <InputLabel
                     htmlFor="firstname"
