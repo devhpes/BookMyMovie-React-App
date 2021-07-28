@@ -21,6 +21,7 @@ const customStyles = {
     left: "50%",
     right: "auto",
     bottom: "auto",
+    height: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     textAlign: "center",
@@ -39,7 +40,7 @@ const styles = (theme) => ({
   Paper: {
     borderRadius: 5,
     padding: 5,
-    border: "0.1px solid grey",
+    border: "0.1px solid 	#D3D3D3",
   },
 });
 
@@ -68,7 +69,7 @@ const Header = (props) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [regPassword, setRegPassword] = useState("");
+  const [regpassword, setRegPassword] = useState("");
   const [contact, setContact] = useState("");
 
   const [registrationSucces, setRegistrationSucces] = useState(false);
@@ -89,8 +90,8 @@ const Header = (props) => {
     setPassword(e.target.value);
   };
 
-  const loginHandler = () => {
-
+  const loginHandler = (e) => {
+    if (e) e.preventDefault();
     const encodeUsernameAndPassword = window.btoa(`${username}:${password}`);
 
     fetch("http://localhost:8085/api/v1/auth/login", {
@@ -100,49 +101,16 @@ const Header = (props) => {
         Accept: "application/json;Charset=UTF-8",
         Authorization: `Basic ${encodeUsernameAndPassword}`,
       },
-    })
-      .then((res) => res.json())
-      .then(
-        (response) => {
-          setLoggedIn(response);
-        },
-        (error) => {
-          setError(error);
-        }
-      );
-  };
-
-  const registerHandler = () => {
-    fetch("http://localhost:8085/api/v1/signup", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json;Charset=UTF-8",
-        Accept: "application/json;Charset=UTF-8",
-        body: JSON.stringify({
-          email_address: email,
-          first_name: firstname,
-          last_name: lastname,
-          mobile_number: contact,
-          password: regPassword,
-        }),
+    }).then(
+      (response) => {
+        console.log(response);
+        setLoggedIn(response);
       },
-    })
-      .then((res) => res.json())
-      .then(
-        (response) => {
-          setRegistrationSucces(response);
-          console.log(response);
-        },
-        (error) => {
-          setError(error);
-        }
-      );
+      (error) => {
+        setError(error);
+      }
+    );
   };
-
-  useEffect(() => {
-    loginHandler();
-    registerHandler();
-  }, []);
 
   const firstNameChangeHandler = (e) => {
     setFirstName(e.target.value);
@@ -163,6 +131,39 @@ const Header = (props) => {
   const contactChangeHandler = (e) => {
     setContact(e.target.value);
   };
+
+  const registerHandler = (e) => {
+    if (e) e.preventDefault();
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_address: email,
+        first_name: firstname,
+        last_name: lastname,
+        mobile_number: contact,
+        password: regpassword,
+      }),
+    };
+
+    fetch("http://localhost:8085/api/v1/signup", requestOptions).then(
+      (response) => {
+        setRegistrationSucces(response.ok);
+        console.log(response);
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+
+  useEffect(() => {
+    loginHandler();
+    registerHandler();
+  }, []);
 
   const logoutHandler = (e) => {
     sessionStorage.removeItem("uuid");
@@ -208,6 +209,7 @@ const Header = (props) => {
             {value === 0 && (
               <TabContainer>
                 <br />
+                {/* <form onSubmit={loginHandler}> */}
                 <FormControl required>
                   <InputLabel htmlFor="username" className={classes.inputLable}>
                     Username
@@ -263,6 +265,7 @@ const Header = (props) => {
                 >
                   LOGIN
                 </Button>
+                {/* </form> */}
               </TabContainer>
             )}
 
@@ -287,10 +290,8 @@ const Header = (props) => {
                     <span className="red">required</span>
                   </FormHelperText>
                 </FormControl>
-
                 <br />
-                <br />
-
+          
                 <FormControl required>
                   <InputLabel htmlFor="lastname" className={classes.inputLable}>
                     Last Name
@@ -307,8 +308,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
-
+               
                 <FormControl required>
                   <InputLabel htmlFor="email" className={classes.inputLable}>
                     Email
@@ -316,7 +316,7 @@ const Header = (props) => {
                   <Input
                     className={classes.Input}
                     id="email"
-                    type="text"
+                    type="email"
                     email={email}
                     onChange={emailChangeHandler}
                   />
@@ -325,8 +325,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
-
+              
                 <FormControl required>
                   <InputLabel
                     htmlFor="registerPassword"
@@ -338,7 +337,7 @@ const Header = (props) => {
                     className={classes.Input}
                     id="registerPassword"
                     type="password"
-                    regPassword={regPassword}
+                    regpassword={regpassword}
                     onChange={regPasswordChangeHandler}
                   />
                   <FormHelperText>
@@ -346,7 +345,7 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
+              
 
                 <FormControl required>
                   <InputLabel htmlFor="contact" className={classes.inputLable}>
@@ -364,13 +363,10 @@ const Header = (props) => {
                   </FormHelperText>
                 </FormControl>
                 <br />
-                <br />
 
                 {registrationSucces === true && (
                   <FormControl>
-                    <span className="success">
-                      Registration Successful. Please Login!
-                    </span>
+                    <span className="registrationSuccess">Registration Successful. Please Login!</span>
                   </FormControl>
                 )}
                 <br />
