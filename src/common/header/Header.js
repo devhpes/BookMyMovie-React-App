@@ -61,7 +61,6 @@ const Header = (props) => {
     setErrorForEmail(false);
     setErrorForRegPassword(false);
     setErrorForContact(false);
-
     setIsOpen(true);
   };
 
@@ -160,7 +159,7 @@ const Header = (props) => {
     firstname === "" ? setErrorForFirstName(true) : setErrorForFirstName(false);
     lastname === "" ? setErrorForLastName(true) : setErrorForLastName(false);
     email === "" ? setErrorForEmail(true) : setErrorForEmail(false);
-    password === ""
+    regpassword === ""
       ? setErrorForRegPassword(true)
       : setErrorForRegPassword(false);
     contact === "" ? setErrorForContact(true) : setErrorForContact(false);
@@ -182,7 +181,10 @@ const Header = (props) => {
 
     fetch("http://localhost:8085/api/v1/signup", requestOptions).then(
       (response) => {
-        setRegistrationSucces(response.ok);
+        if (response.ok) {
+          setRegistrationSucces(true);
+        } else {
+        }
       },
       (error) => {
         setError(error);
@@ -367,7 +369,7 @@ const Header = (props) => {
                     <Input
                       className={classes.Input}
                       id="email"
-                      type="email"
+                      type="text"
                       email={email}
                       onChange={emailChangeHandler}
                     />
@@ -432,12 +434,7 @@ const Header = (props) => {
                   )}
                   <br />
 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    onClick={registerHandler}
-                  >
+                  <Button type="submit" variant="contained" color="primary">
                     REGISTER
                   </Button>
                 </form>
