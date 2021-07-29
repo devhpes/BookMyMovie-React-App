@@ -54,6 +54,14 @@ const Header = (props) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const openModal = () => {
+    setErrorForUsername(false);
+    setErrorForPassword(false);
+    setErrorForFirstName(false);
+    setErrorForLastName(false);
+    setErrorForEmail(false);
+    setErrorForRegPassword(false);
+    setErrorForContact(false);
+
     setIsOpen(true);
   };
 
@@ -76,6 +84,14 @@ const Header = (props) => {
 
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const [requiredUsername, setErrorForUsername] = useState(false);
+  const [requiredPassword, setErrorForPassword] = useState(false);
+  const [requiredFirstName, setErrorForFirstName] = useState(false);
+  const [requiredLastName, setErrorForLastName] = useState(false);
+  const [requiredEmail, setErrorForEmail] = useState(false);
+  const [requiredRegPassword, setErrorForRegPassword] = useState(false);
+  const [requiredContact, setErrorForContact] = useState(false);
+
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -90,6 +106,10 @@ const Header = (props) => {
 
   const loginHandler = (e) => {
     if (e) e.preventDefault();
+
+    username === "" ? setErrorForUsername(true) : setErrorForUsername(false);
+    password === "" ? setErrorForPassword(true) : setErrorForPassword(false);
+
     const encodeUsernameAndPassword = window.btoa(`${username}:${password}`);
 
     fetch("http://localhost:8085/api/v1/auth/login", {
@@ -136,6 +156,15 @@ const Header = (props) => {
 
   const registerHandler = (e) => {
     if (e) e.preventDefault();
+
+    firstname === "" ? setErrorForFirstName(true) : setErrorForFirstName(false);
+    lastname === "" ? setErrorForLastName(true) : setErrorForLastName(false);
+    email === "" ? setErrorForEmail(true) : setErrorForEmail(false);
+    password === ""
+      ? setErrorForRegPassword(true)
+      : setErrorForRegPassword(false);
+    contact === "" ? setErrorForContact(true) : setErrorForContact(false);
+
     const requestOptions = {
       method: "POST",
       headers: {
@@ -182,19 +211,17 @@ const Header = (props) => {
     <div>
       <header className="header">
         <img src={logo} className="logo" alt="Movies App Logo" />
-      
-          <div className="topnav-right">
-            <Button variant="contained" color="default" onClick={openModal}>
-              Login
-            </Button>
-          </div>
-       
-          <div className="topnav-right">
-            <Button variant="contained" color="default" onclick={logoutHandler}>
-              Logout
-            </Button>
-          </div>
-     
+        <div className="topnav-right">
+          <Button variant="contained" color="default" onClick={openModal}>
+            Login
+          </Button>
+        </div>
+        <div className="topnav-right">
+          <Button variant="contained" color="default" onclick={logoutHandler}>
+            Logout
+          </Button>
+        </div>
+        .
       </header>
 
       <Modal
@@ -230,6 +257,11 @@ const Header = (props) => {
                       username={username}
                       onChange={usernameChangeHandler}
                     />
+                    {requiredUsername === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
 
                   <br />
@@ -249,6 +281,11 @@ const Header = (props) => {
                       password={password}
                       onChange={passwordChangeHandler}
                     />
+                    {requiredPassword === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <br />
                   <br />
@@ -293,9 +330,11 @@ const Header = (props) => {
                       firstname={firstname}
                       onChange={firstNameChangeHandler}
                     />
-                    <FormHelperText>
-                      <span className="red">required</span>
-                    </FormHelperText>
+                    {requiredFirstName === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <br />
 
@@ -313,9 +352,11 @@ const Header = (props) => {
                       lastname={lastname}
                       onChange={lastNameChangeHandler}
                     />
-                    <FormHelperText>
-                      <span className="red">required</span>
-                    </FormHelperText>
+                    {requiredLastName === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <br />
 
@@ -330,9 +371,11 @@ const Header = (props) => {
                       email={email}
                       onChange={emailChangeHandler}
                     />
-                    <FormHelperText>
-                      <span className="red">required</span>
-                    </FormHelperText>
+                    {requiredEmail === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <br />
 
@@ -350,9 +393,11 @@ const Header = (props) => {
                       regpassword={regpassword}
                       onChange={regPasswordChangeHandler}
                     />
-                    <FormHelperText>
-                      <span className="red">required</span>
-                    </FormHelperText>
+                    {requiredRegPassword === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <br />
 
@@ -370,9 +415,11 @@ const Header = (props) => {
                       contact={contact}
                       onChange={contactChangeHandler}
                     />
-                    <FormHelperText>
-                      <span className="red">required</span>
-                    </FormHelperText>
+                    {requiredContact === true && (
+                      <FormHelperText>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    )}
                   </FormControl>
                   <br />
 
