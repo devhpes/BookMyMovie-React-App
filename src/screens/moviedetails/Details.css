@@ -55,19 +55,23 @@ iframe {
 
 @media (max-width: 1120px) {
     .leftSideDetails {
-      width: 100%;
-      text-align: center;
+        width: 100%;
+        text-align: center;
     }
+
     .middleSideDetails {
-      width: 100%;
+        width: 100%;
     }
+
     .rightSideDetails {
-      width: 100%;
+        width: 100%;
     }
+
     .flex-container {
-      flex-direction: column;
+        flex-direction: column;
     }
+
     .paddingRight {
-      margin-right: 30px;
+        margin-right: 30px;
     }
-  }
+}

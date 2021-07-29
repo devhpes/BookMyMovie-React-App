@@ -92,19 +92,21 @@ const Header = (props) => {
     if (e) e.preventDefault();
     const encodeUsernameAndPassword = window.btoa(`${username}:${password}`);
 
-    const rawResponse = fetch("http://localhost:8085/api/v1/auth/login", {
+    fetch("http://localhost:8085/api/v1/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
         Accept: "application/json;Charset=UTF-8",
         Authorization: `Basic ${encodeUsernameAndPassword}`,
       },
-    })
-    .then(
+    }).then(
       (response) => {
         setLoggedIn(response.ok);
         //sessionStorage.setItem("CurrentUser", JSON.stringify(rawResponse.response));
-        sessionStorage.setItem("access-token", response.headers.get("access-token"));
+        sessionStorage.setItem(
+          "access-token",
+          response.headers.get("access-token")
+        );
       },
       (error) => {
         setError(error);
@@ -180,19 +182,19 @@ const Header = (props) => {
     <div>
       <header className="header">
         <img src={logo} className="logo" alt="Movies App Logo" />
-        {loggedIn ? 
+      
           <div className="topnav-right">
             <Button variant="contained" color="default" onClick={openModal}>
               Login
             </Button>
           </div>
-         : 
+       
           <div className="topnav-right">
             <Button variant="contained" color="default" onclick={logoutHandler}>
               Logout
             </Button>
           </div>
-      } 
+     
       </header>
 
       <Modal

@@ -53,7 +53,6 @@ const StyledRating = withStyles({
 })(Rating);
 
 const Details = (props) => {
-  
   const { classes } = props;
 
   const [movies, setmovies] = useState({
@@ -65,10 +64,12 @@ const Details = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
 
+  const details = props.location.state.details;
+
   const URL = "http://localhost:8085/api/v1/";
 
   const Movies = () => {
-    fetch(`${URL}movies/`, {
+    fetch(`${URL}movies`, {
       mode: "no-cors",
       "Cache-Control": "no-cache",
     })
@@ -103,32 +104,32 @@ const Details = (props) => {
       <div>
         <div className="details">
           <div className="back">
-            <Typography>
-              <BrowserRouter>
+            <BrowserRouter>
+              <Typography variant="button">
                 <Link to="/"> &#60; Back to Home</Link>
-              </BrowserRouter>
-            </Typography>
+              </Typography>
+            </BrowserRouter>
           </div>
 
           <div className="flex-container">
             <Grid item xs={2}>
               <div className={classes.leftDetails}>
-                <img src={movies.poster_url} alt={movies.title} />
+                <img src={details.poster_url} alt={movies.title} />
               </div>
             </Grid>
 
-            <Grid item xs={7} className={classes.middleDetails}>
+            <Grid item xs={8} className={classes.middleDetails}>
               <div className="marginTop">
                 <div>
                   <Typography variant="headline" component="h2">
-                    {movies.title}
+                    {details.title}
                   </Typography>
                 </div>
                 <br />
                 <div>
                   <Typography>
                     <span className="bold">Genres: </span>
-                    {movies.genres}
+                    {details.genres}
                   </Typography>
                 </div>
                 <div>
@@ -139,7 +140,7 @@ const Details = (props) => {
                 <div>
                   <Typography>
                     <span className="bold">Release Date:</span>
-                    {new Date(movies.release_date).toDateString()}
+                    {new Date(details.release_date).toDateString()}
                   </Typography>
                 </div>
                 <div>
@@ -150,10 +151,10 @@ const Details = (props) => {
                 <div className="marginTop">
                   <Typography>
                     <span className="bold">Plot:</span>{" "}
-                    <a href={movies.wiki_url} target="_blank">
+                    <a href={details.wiki_url} target="_blank">
                       (Wiki Link)
                     </a>
-                    {movies.storyline}
+                    {details.storyline}
                   </Typography>
                 </div>
                 <div className="trailerContainer">
@@ -162,7 +163,7 @@ const Details = (props) => {
                   </Typography>
                   <YouTube
                     //react-youtube
-                    videoId={movies.trailer_url.split("?v=")[1]}
+                    videoId={details.trailer_url.split("?v=")[1]}
                     opts={opts}
                     onReady={this._onReady}
                   />
@@ -192,14 +193,15 @@ const Details = (props) => {
                 </div>
                 <div className="paddingRight">
                   <GridList cellHeight={160} cols={2}>
-                    {movies.artists != null &&
-                      movies.artists.map((artist) => (
+                    {details.artists != null &&
+                      details.artists.map((artist) => (
                         <GridListTile
                           className="gridTile"
                           onClick={() => artistClickHandler(artist.wiki_url)}
                           key={artist.id}
                         >
                           <img
+                            style={{ cursor: "pointer" }}
                             src={artist.profile_url}
                             alt={artist.first_name + " " + artist.last_name}
                           />
