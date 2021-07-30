@@ -38,6 +38,11 @@
   padding-right: 20px;
 }
 
+.bookshowbutton {
+ float: right;
+ margin-right: 8px;
+}
+
 .bookshow {
   float: right;
   margin-right: 8px;

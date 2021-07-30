@@ -236,7 +236,15 @@ const Header = (props) => {
             </Button>
           </div>
         )}
-        .
+        <div className="bookshowbutton">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.openModalHandler}
+          >
+            Book Show
+          </Button>
+        </div>
       </header>
 
       <Modal

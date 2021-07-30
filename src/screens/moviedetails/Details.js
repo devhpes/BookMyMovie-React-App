@@ -12,7 +12,7 @@ import { Link, BrowserRouter } from "react-router-dom";
 import YouTube from "react-youtube";
 import { Rating } from "@material-ui/lab/";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const styles = () => ({
   flexContainer: {
@@ -99,7 +99,7 @@ const Details = (props) => {
 
   const goBack = () => {
     history.goBack();
-  }
+  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -110,15 +110,13 @@ const Details = (props) => {
       <div>
         <div className="details">
           <div className="back">
-            <BrowserRouter>
-              <Typography variant="button">
-                <Link to={"/"} className="back" onClick={goBack} > &#60; Back to Home</Link>
-              </Typography>
-            </BrowserRouter>
+            <Typography onClick={goBack}>
+                &#60; Back to Home
+            </Typography>
           </div>
 
           <div className="flex-container">
-            <Grid item xs={2} class={classes.rightGrid}>
+            <Grid item xs={2}>
               <div className={classes.leftDetails}>
                 <img src={details.poster_url} alt={movies.title} />
               </div>
@@ -127,9 +125,7 @@ const Details = (props) => {
             <Grid item xs={8} className={classes.middleDetails}>
               <div className="marginTop">
                 <div>
-                  <Typography component="h2">
-                    {details.title}
-                  </Typography>
+                  <Typography component="h2">{details.title}</Typography>
                 </div>
                 <br />
                 <div>
