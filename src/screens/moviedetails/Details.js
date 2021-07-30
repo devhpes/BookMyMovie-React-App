@@ -12,6 +12,7 @@ import { Link, BrowserRouter } from "react-router-dom";
 import YouTube from "react-youtube";
 import { Rating } from "@material-ui/lab/";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { useHistory } from 'react-router-dom';
 
 const styles = () => ({
   flexContainer: {
@@ -55,6 +56,8 @@ const StyledRating = withStyles({
 const Details = (props) => {
   const { classes } = props;
 
+  const history = useHistory();
+
   const [movies, setmovies] = useState({
     genres: "",
     artist: "",
@@ -94,6 +97,10 @@ const Details = (props) => {
     window.location = url;
   };
 
+  const goBack = () => {
+    history.goBack();
+  }
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
@@ -105,7 +112,7 @@ const Details = (props) => {
           <div className="back">
             <BrowserRouter>
               <Typography variant="button">
-                <Link to={"/"} className="back"> &#60; Back to Home</Link>
+                <Link to={"/"} className="back" onClick={goBack} > &#60; Back to Home</Link>
               </Typography>
             </BrowserRouter>
           </div>
