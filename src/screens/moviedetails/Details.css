@@ -47,6 +47,8 @@
     margin-bottom: 0px;
     height: 24px;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 
 iframe {

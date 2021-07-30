@@ -78,7 +78,6 @@ const Details = (props) => {
         (result) => {
           setIsLoaded(true);
           setmovies(result);
-          console.log(result);
         },
         (error) => {
           setIsLoaded(true);
@@ -106,13 +105,13 @@ const Details = (props) => {
           <div className="back">
             <BrowserRouter>
               <Typography variant="button">
-                <Link to="/"> &#60; Back to Home</Link>
+                <Link to={"/"} className="back"> &#60; Back to Home</Link>
               </Typography>
             </BrowserRouter>
           </div>
 
           <div className="flex-container">
-            <Grid item xs={2}>
+            <Grid item xs={2} class={classes.rightGrid}>
               <div className={classes.leftDetails}>
                 <img src={details.poster_url} alt={movies.title} />
               </div>
@@ -121,7 +120,7 @@ const Details = (props) => {
             <Grid item xs={8} className={classes.middleDetails}>
               <div className="marginTop">
                 <div>
-                  <Typography variant="headline" component="h2">
+                  <Typography component="h2">
                     {details.title}
                   </Typography>
                 </div>
@@ -183,7 +182,7 @@ const Details = (props) => {
                     `${value} Heart${value !== 1 ? "s" : ""}`
                   }
                   precision={1.0}
-                  icon={<StarBorderIcon color="black" fontSize="inherit" />}
+                  icon={<StarBorderIcon fontSize="inherit" />}
                 />
 
                 <div className="bold marginBottom marginTop">

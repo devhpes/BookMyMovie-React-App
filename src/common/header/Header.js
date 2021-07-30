@@ -14,6 +14,7 @@ import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -50,6 +51,8 @@ const Header = (props) => {
   const { classes } = props;
 
   const [value, setValue] = useState(0);
+
+  const history = useHistory();
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -106,8 +109,13 @@ const Header = (props) => {
   const loginHandler = (e) => {
     if (e) e.preventDefault();
 
-    username === "" ? setErrorForUsername(true) : setErrorForUsername(false);
-    password === "" ? setErrorForPassword(true) : setErrorForPassword(false);
+    if (username === "" || password === "") {
+      setErrorForUsername(true);
+      setErrorForPassword(true);
+    } else {
+      setErrorForUsername(false);
+      setErrorForPassword(false);
+    }
 
     const encodeUsernameAndPassword = window.btoa(`${username}:${password}`);
 
@@ -118,19 +126,23 @@ const Header = (props) => {
         Accept: "application/json;Charset=UTF-8",
         Authorization: `Basic ${encodeUsernameAndPassword}`,
       },
-    }).then(
-      (response) => {
-        setLoggedIn(response.ok);
-        //sessionStorage.setItem("CurrentUser", JSON.stringify(rawResponse.response));
+    }).then((response) => {
+      if (response.ok) {
+        setLoggedIn(true);
         sessionStorage.setItem(
           "access-token",
           response.headers.get("access-token")
+          //sessionStorage.setItem("CurrentUser", JSON.stringify(rawResponse.response));
         );
-      },
-      (error) => {
-        setError(error);
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      } else {
+        (error) => {
+          setError(error);
+        };
       }
-    );
+    });
   };
 
   const firstNameChangeHandler = (e) => {
@@ -184,10 +196,10 @@ const Header = (props) => {
         if (response.ok) {
           setRegistrationSucces(true);
         } else {
+          (error) => {
+            setError(error);
+          };
         }
-      },
-      (error) => {
-        setError(error);
       }
     );
   };
@@ -198,31 +210,31 @@ const Header = (props) => {
   }, []);
 
   const logoutHandler = (e) => {
+    sessionStorage.removeItem("CurrentUser");
     sessionStorage.removeItem("access-token");
+    //console.log(history.push("/"))
     setLoggedIn({
       loggedIn: false,
     });
-  };
-
-  const getCurrentUser = () => {
-    sessionStorage.getItem("access-token");
-    console.log(sessionStorage.getItem("access-token"));
   };
 
   return (
     <div>
       <header className="header">
         <img src={logo} className="logo" alt="Movies App Logo" />
-        <div className="topnav-right">
-          <Button variant="contained" color="default" onClick={openModal}>
-            Login
-          </Button>
-        </div>
-        <div className="topnav-right">
-          <Button variant="contained" color="default" onclick={logoutHandler}>
-            Logout
-          </Button>
-        </div>
+        {!loggedIn ? (
+          <div className="topnav-right">
+            <Button variant="contained" color="default" onClick={openModal}>
+              Login
+            </Button>
+          </div>
+        ) : (
+          <div className="topnav-right">
+            <Button variant="contained" color="default" onClick={logoutHandler}>
+              Logout
+            </Button>
+          </div>
+        )}
         .
       </header>
 
@@ -244,7 +256,7 @@ const Header = (props) => {
             {value === 0 && (
               <TabContainer>
                 <br />
-                <form onSubmit={loginHandler} noValidate>
+                <form onSubmit={loginHandler} noValidate className="form">
                   <FormControl required>
                     <InputLabel
                       htmlFor="username"
@@ -432,6 +444,7 @@ const Header = (props) => {
                       </span>
                     </FormControl>
                   )}
+                  <br />
                   <br />
 
                   <Button type="submit" variant="contained" color="primary">
