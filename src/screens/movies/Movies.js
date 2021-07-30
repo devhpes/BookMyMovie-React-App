@@ -148,7 +148,6 @@ const Movies = (props) => {
 
   const history = useHistory();
   const openDetailsPage = (movies) => {
-    console.log(movies);
     history.push("/details", { details: movies });
   };
 
