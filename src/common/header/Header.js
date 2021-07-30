@@ -132,8 +132,8 @@ const Header = (props) => {
         sessionStorage.setItem(
           "access-token",
           response.headers.get("access-token")
-          //sessionStorage.setItem("CurrentUser", JSON.stringify(rawResponse.response));
         );
+        // Setting timeout to hold login screen for 1sec
         setTimeout(() => {
           closeModal();
         }, 1000);
@@ -216,6 +216,8 @@ const Header = (props) => {
     setLoggedIn({
       loggedIn: false,
     });
+    //Just a hack
+    window.location.reload();
   };
 
   return (
