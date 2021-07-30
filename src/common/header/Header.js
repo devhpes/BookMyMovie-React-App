@@ -133,7 +133,7 @@ const Header = (props) => {
           "access-token",
           response.headers.get("access-token")
         );
-        // Setting timeout to hold login screen for 1sec
+        // Setting timeout to hold login screen for 1sec after successful login
         setTimeout(() => {
           closeModal();
         }, 1000);
@@ -212,11 +212,10 @@ const Header = (props) => {
   const logoutHandler = (e) => {
     sessionStorage.removeItem("CurrentUser");
     sessionStorage.removeItem("access-token");
-    //console.log(history.push("/"))
+    //Setting state to false after logout and re-rendering page using reload()
     setLoggedIn({
       loggedIn: false,
     });
-    //Just a hack
     window.location.reload();
   };
 
