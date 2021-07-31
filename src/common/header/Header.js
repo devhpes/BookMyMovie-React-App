@@ -14,7 +14,6 @@ import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { useHistory } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -51,8 +50,6 @@ const Header = (props) => {
   const { classes } = props;
 
   const [value, setValue] = useState(0);
-
-  const history = useHistory();
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -93,6 +90,8 @@ const Header = (props) => {
   const [requiredEmail, setErrorForEmail] = useState(false);
   const [requiredRegPassword, setErrorForRegPassword] = useState(false);
   const [requiredContact, setErrorForContact] = useState(false);
+
+  // const [showBookShowButton, setBookShowButton] = useState(true);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -236,15 +235,16 @@ const Header = (props) => {
             </Button>
           </div>
         )}
-        <div className="bookshowbutton">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.openModalHandler}
-          >
-            Book Show
-          </Button>
-        </div>
+
+          <div className="bookshow">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={openModal}
+            >
+              Book Show
+            </Button>
+            </div>
       </header>
 
       <Modal
@@ -465,12 +465,17 @@ const Header = (props) => {
           </CardContent>
         </Paper>
       </Modal>
+      
     </div>
   );
+
+  
 };
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+
 
 export default withStyles(styles)(Header);

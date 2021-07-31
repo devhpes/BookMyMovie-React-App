@@ -277,7 +277,6 @@ const Movies = (props) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  //onClick={filterHandler}
                 >
                   APPLY
                 </Button>

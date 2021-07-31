@@ -9,18 +9,19 @@ const Controller = () => {
 
   return (
     <div>
-      <Header />
+      <Header/>
       <Router>
         <div>
-          <Route exact path={["/", "/home"]} component={Home}>
-          </Route>
+          <Route exact path={["/", "/home"]}
+          render={(props) => <Home {...props}></Home>}
+          ></Route>
           <Route
             path="/details"
-            render={(props) => <Details {...props}></Details>}
+            render={(props) => <Details {...props} ></Details>}
           ></Route>
           <Route
             path="/bookshow"
-            render={(props) => <BookShow {...props} bookshow="true"></BookShow>}
+            render={(props) => <BookShow {...props}></BookShow>}
           ></Route>
           </div>
       </Router>

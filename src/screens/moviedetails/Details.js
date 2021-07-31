@@ -8,11 +8,11 @@ import {
   GridListTileBar,
   GridList,
 } from "@material-ui/core/";
-import { Link, BrowserRouter } from "react-router-dom";
 import YouTube from "react-youtube";
 import { Rating } from "@material-ui/lab/";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { useHistory } from "react-router-dom";
+import Header from "../../common/header/Header";
 
 const styles = () => ({
   flexContainer: {
@@ -101,6 +101,8 @@ const Details = (props) => {
     history.goBack();
   };
 
+  
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
@@ -108,11 +110,10 @@ const Details = (props) => {
   } else {
     return (
       <div>
+      {/* <Header showBookShowButton="true" details={details}/> */}
         <div className="details">
           <div className="back">
-            <Typography onClick={goBack}>
-                &#60; Back to Home
-            </Typography>
+            <Typography onClick={goBack}>&#60; Back to Home</Typography>
           </div>
 
           <div className="flex-container">
@@ -131,7 +132,7 @@ const Details = (props) => {
                 <div>
                   <Typography>
                     <span className="bold">Genres: </span>
-                    {details.genres}
+                    {details.genres.join(', ')}
                   </Typography>
                 </div>
                 <div>
